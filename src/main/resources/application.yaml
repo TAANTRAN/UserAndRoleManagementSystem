@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: UserAndRoleManagementSystem
+  datasource:
+    url: jdbc:postgresql://localhost:5432/tantm
+    username: postgres
+    password: minhtan
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
