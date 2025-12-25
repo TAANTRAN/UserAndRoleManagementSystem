@@ -1,6 +1,7 @@
 package com.example.UserAndRoleManagementSystem.security;
 
 import com.example.UserAndRoleManagementSystem.dto.ErrorResponse;
+import com.example.UserAndRoleManagementSystem.dto.response.ApiResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,15 +25,12 @@ public class JwtAuthEntryPoint implements AuthenticationEntryPoint {
 
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
 
-        ErrorResponse error = new ErrorResponse(
-                401,
-                "Unauthorized"
-        );
+        ApiResponse<Void> apiResponse =
+                ApiResponse.error("UNAUTHORIZED", "Authentication required");
 
         response.getWriter().write(
-                objectMapper.writeValueAsString(error)
+                objectMapper.writeValueAsString(apiResponse)
         );
     }
 }

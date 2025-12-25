@@ -1,6 +1,7 @@
 package com.example.UserAndRoleManagementSystem.security;
 
 import com.example.UserAndRoleManagementSystem.dto.ErrorResponse;
+import com.example.UserAndRoleManagementSystem.dto.response.ApiResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,20 +20,17 @@ public class JwtAccessDeniedHandler implements AccessDeniedHandler {
     public void handle(
             HttpServletRequest request,
             HttpServletResponse response,
-            AccessDeniedException ex
+            AccessDeniedException accessDeniedException
     ) throws IOException {
 
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
 
-        ErrorResponse error = new ErrorResponse(
-                403,
-                "Forbidden"
-        );
+        ApiResponse<Void> apiResponse =
+                ApiResponse.error("ACCESS_DENIED", "You do not have permission");
 
         response.getWriter().write(
-                objectMapper.writeValueAsString(error)
+                objectMapper.writeValueAsString(apiResponse)
         );
     }
 }
